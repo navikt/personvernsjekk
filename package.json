@@ -1,0 +1,22 @@
+{
+  "name": "personvernsjekk",
+  "version": "1.0.0",
+  "description": "Scanner kode for sensitive data",
+  "scripts": {
+    "start": "ts-node src/scan.ts",
+    "test": "exit 1"
+  },
+  "author": "NAVIKT",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.11.3",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "prettier": "^1.14.3",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.30",
+    "typescript": "^3.1.1"
+  }
+}

@@ -1,0 +1,32 @@
+sudo: required
+language: node_js
+node_js:
+  - "10"
+services:
+  - docker
+
+env:
+  global:
+    - TZ='Europe/Oslo'
+    - DATE="$(date +%Y%m%d)"
+    - TIME="$(date +%H%M)"
+    - COMMIT_NUMBER="$((git fetch --unshallow || true ) && git rev-list --count $TRAVIS_COMMIT)"
+    - RELEASE_VERSION="$COMMIT_NUMBER.$DATE.$TIME"
+    - APPLICATION_NAME='badkitty'
+    - DOCKER_IMAGE_FULL_NAME="navikt/$APPLICATION_NAME:$RELEASE_VERSION"
+    - DOCKER_IMAGE_LATEST="navikt/$APPLICATION_NAME:latest
+
+script:
+  - npm run test
+  - docker build -t $DOCKER_IMAGE_FULL_NAME -t $DOCKER_IMAGE_LATEST" .
+
+deploy:
+  provider: script
+  script: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" && docker push "$DOCKER_IMAGE_FULL_NAME" && docker push "$DOCKER_IMAGE_LATEST"
+  on:
+    branch: master
+
+after_deploy:
+  - git remote add auth-origin "https://${GITHUB_ACCESS_TOKEN}@github.com/${TRAVIS_REPO_SLUG}"
+  - git tag $RELEASE_VERSION
+  - git push auth-origin --tags
