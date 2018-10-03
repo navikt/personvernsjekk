@@ -1,21 +1,23 @@
-[![Build Status](https://travis-ci.org/navikt/pus-dockerfile-linter.svg?branch=master)](https://travis-ci.org/navikt/pus-dockerfile-linter)
+[![Build Status](https://travis-ci.org/navikt/personvernsjekk.svg?branch=master)](https://travis-ci.org/navikt/personvernsjekk)
 
-dockerfile-linter
+Personvernsjekk
 ================
 
-Sjekker om Dockerfile er i henhold til FO sine krav. 
+Scanner kode etter sensitive data 
 
-Linteren ser etter:
-- Utdaterte base images
-- Bruk av `npm install` i stedet for `npm ci`
+Scanneren ser etter:
+- Fødselsnummer
+- Veilederidenter
+
+Scanneren ser bort i fra testdata.
 
 ### Bygg
 
-`docker build -t dockerfile-linter .`
+`docker build -t navikt/personvernsjekk:<versjon> .`
 
 ### Kjør
 
-`docker run dockerfile-linter <path-to-dockerfile>`
+`docker run navikt/personvernsjekk <path-to-dockerfile>`
 Eller uten docker:
 
 `npm start <path til dockerfile>`
