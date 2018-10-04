@@ -4,7 +4,7 @@
   "description": "Scanner kode for sensitive data",
   "scripts": {
     "start": "ts-node src/scan.ts",
-    "test": "exit 1"
+    "test": "mocha --compilers ts:ts-node/register src/**/*.spec.ts"
   },
   "author": "NAVIKT",
   "license": "MIT",
