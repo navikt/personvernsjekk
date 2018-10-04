@@ -12,13 +12,13 @@ env:
     - TIME="$(date +%H%M)"
     - COMMIT_NUMBER="$((git fetch --unshallow || true ) && git rev-list --count $TRAVIS_COMMIT)"
     - RELEASE_VERSION="$COMMIT_NUMBER.$DATE.$TIME"
-    - APPLICATION_NAME='badkitty'
+    - APPLICATION_NAME='personvernsjekk'
     - DOCKER_IMAGE_FULL_NAME="navikt/$APPLICATION_NAME:$RELEASE_VERSION"
     - DOCKER_IMAGE_LATEST="navikt/$APPLICATION_NAME:latest"
 
 script:
   - npm run test
-  - docker build -t $DOCKER_IMAGE_FULL_NAME -t $DOCKER_IMAGE_LATEST" .
+  - docker build -t $DOCKER_IMAGE_FULL_NAME -t $DOCKER_IMAGE_LATEST .
 
 deploy:
   provider: script
