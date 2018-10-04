@@ -14,7 +14,7 @@ env:
     - RELEASE_VERSION="$COMMIT_NUMBER.$DATE.$TIME"
     - APPLICATION_NAME='badkitty'
     - DOCKER_IMAGE_FULL_NAME="navikt/$APPLICATION_NAME:$RELEASE_VERSION"
-    - DOCKER_IMAGE_LATEST="navikt/$APPLICATION_NAME:latest
+    - DOCKER_IMAGE_LATEST="navikt/$APPLICATION_NAME:latest"
 
 script:
   - npm run test
