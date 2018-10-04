@@ -1,8 +1,7 @@
 import {expect} from 'chai'
 import navfaker from 'nav-faker/dist/index';
-import {containsFnr} from "./util";
+import {containsFnr, containsVeilederId} from "./util";
 import ignore from "./ignore";
-
 
 function createDiff(diff: string): string {
     return `
@@ -18,6 +17,14 @@ ${diff}
  
  FOO
 `
+}
+
+function createRandomVeilederId() {
+    const prefixes = 'ABCDEFGHIJKLMNOPQRSTUVWXY'
+    const randomIndex = Math.round(Math.random() * (prefixes.length - 1));
+    const randomPrefix = prefixes.charAt(randomIndex)
+    const randomPostfix = Math.round(Math.random() * 1000000);
+    return `${randomPrefix}${randomPostfix}`
 }
 
 describe('fnr', function () {
@@ -52,20 +59,23 @@ describe('fnr', function () {
 
 describe('veilederId', function () {
     it('should return true for valid ids', function () {
-
+        const id = createRandomVeilederId()
+        const diff = createDiff(`+${id}`)
+        const result = containsVeilederId(diff)
+        expect(result).to.be.true
     });
 
     it('should return false for test ids', function () {
-
-    });
-});
-
-describe('aktoerId', function () {
-    it('should return true on valid aktoerId', function () {
-        return false
+        const id = 'Z123456'
+        const diff = createDiff(`+${id}`)
+        const result = containsVeilederId(diff)
+        expect(result).to.be.false
     });
 
-    it('should return false on aktoerId for aremark (testdata)', function () {
-        return false
+    it('should only search for added lines', function () {
+        const id = createRandomVeilederId()
+        const diff = createDiff(`-${id}`)
+        const result = containsVeilederId(diff)
+        expect(result).to.be.false
     });
 });

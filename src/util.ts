@@ -20,12 +20,7 @@ export function containsFnr(diff: string): boolean {
 export function containsVeilederId(diff: string): boolean {
     const veilederIdRegex = /[A-Ya-y]\d{6}/
     let addedLines = diff.split('\n').filter(line => line.startsWith('+')).join('\n');
-
-    const matches = addedLines.match(veilederIdRegex)
-    if (!matches) {
-        return false
-    }
-    return matches.length > 0
+    return new RegExp(veilederIdRegex).test(addedLines)
 }
 
 export default function containsSensitiveData(diff: string): boolean {
